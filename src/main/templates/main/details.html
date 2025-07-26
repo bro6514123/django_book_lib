@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+
+{% block title %}details{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="card mb-3">
+            <div class="row g-0">
+                {% if book.photo %}
+                <div class="col-md-4">
+                    <img src="{{ book.photo.url }}" class="img-fluid rounded-start" alt="{{ book.title }}">
+                </div>
+                {% endif %}
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ book.title }}</h2>
+                        <p class="card-text">
+                            <strong>Автор:</strong>
+                            <a href="{{ author.get_absolute_url }}">{{ author.fullname }}</a>
+                        </p>
+                        <p class="card-text">
+                            <strong>Жанри:</strong>
+                            {% for genre in book.ganres.all %}
+                                <a style="text-decoration: none;" href="/{{ genre.slug }}" class="badge bg-secondary">{{ genre.name }}</a>
+                            {% empty %}
+                                <span class="text-muted">Немає жанрів</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ book.desk }}
+                        </p>
+                        <div class="row text-center aling-items-start">
+                            <a href="{% url 'main:books' %}" class="col m-5 btn btn-primary mt-3">Назад до списку книг</a>
+                            <a href="{{ book.file.url }}" class="col m-5 btn btn-primary mt-3 gap-5">Скачати</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}
